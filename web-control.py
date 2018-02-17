@@ -26,4 +26,10 @@ def login():
     # submit creds to login
     login_pass_elem.send_keys(Keys.RETURN)
 
+def getMenuLinks():
+    menu_item_selector = '.panel-inner .description.no-subtitle h3'
+    menu_elems = browser.find_elements_by_css_selector(menu_item_selector)
+    return menu_elems
+    
 login()
+menu_elems = getMenuLinks()
