@@ -1,0 +1,6 @@
+
+creds.py
+
+__pycache__/*
+
+*.pyc
