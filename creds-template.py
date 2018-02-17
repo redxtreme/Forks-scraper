@@ -1,4 +1,4 @@
 login = {
     'p' : 'pass',
-    'u' : 'user',
+    'e' : 'email',
 }
