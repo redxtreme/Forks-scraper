@@ -26,10 +26,19 @@ def login():
     # submit creds to login
     login_pass_elem.send_keys(Keys.RETURN)
 
+# Get all of the menu elements
 def getMenuLinks():
-    menu_item_selector = '.panel-inner .description.no-subtitle h3'
+    menu_item_selector = '''.callout.favorite-action-panel > :last-child, .callout.free-guide > :last-child, .callout.grocery-list-dismissable-tip > :last-child, .callout.grocery-list-panel > :last-child, .callout.meal-plan-panel > :last-child, .callout.mobile-tip > :last-child, .callout.notes > :last-child, .callout.pantry-items > :last-child, .callout.plan-panel > :last-child, .callout.prep-ahead-alert-box > :last-child, .callout.prep-ahead-panel > :last-child, .callout.preptime-panel > :last-child, .callout.print-panel > :last-child, .callout.servings-panel > :last-child, .callout.tooltip-edamam > :last-child, .callout.unauthorized-notes > :last-child, .favorite-action-panel > :last-child, .free-guide > :last-child, .grocery-list-dismissable-tip > :last-child, .grocery-list-panel > :last-child, .meal-plan-panel > :last-child, .mobile-tip > :last-child, .notes > :last-child, .panel.callout > :last-child, .panel > :last-child, .pantry-items > :last-child, .plan-panel > :last-child, .prep-ahead-alert-box > :last-child, .prep-ahead-panel > :last-child, .preptime-panel > :last-child, .print-panel > :last-child, .servings-panel > :last-child, .tooltip-edamam > :last-child, .unauthorized-notes > :last-child'''
     menu_elems = browser.find_elements_by_css_selector(menu_item_selector)
     return menu_elems
-    
+
+# Download the menu on the page
+def downloadMenu():
+    download_selector = '.print-recipe-button.ladda-button'
+    download_elem = browser.find_element_by_css_selector(download_selector)
+    download_elem.click()
+
 login()
 menu_elems = getMenuLinks()
+menu_elems[0].click()
+downloadMenu()
