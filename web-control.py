@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 browser = webdriver.Safari()
 
 url = 'https://my.forksmealplanner.com/#!/archive'
-# print(creds.login['p'])
+
 browser.get(url)
 
 # login to the website
