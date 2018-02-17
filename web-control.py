@@ -1,3 +1,6 @@
 from selenium import webdriver
 browser = webdriver.Safari()
-type(browser)
+
+url = 'https://my.forksmealplanner.com/#!/archive'
+
+browser.get(url)
