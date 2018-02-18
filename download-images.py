@@ -12,5 +12,4 @@ count = 0
 for meal in urls.meals:
     urllib.request.urlretrieve(urls.meals[meal], meal + '.jpg')
     count += 1
-    if count > 0:
-        break
+print(count)
