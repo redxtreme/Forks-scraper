@@ -59,9 +59,9 @@ def main(menu_elems) :
     for i in range(start_at, len(menu_elems)):
 
         # scroll to element row above this element, to make sure it's in view
-        if i > 2:
+        if i >= 2:
             browser.execute_script("arguments[0].scrollIntoView();", menu_elems[i-2])
-        
+
         # skip if we have this file
         if find(menu_elems[i].text):
             print(i)
@@ -79,29 +79,37 @@ os.chdir(creds.myPath)
 
 # gui elements
 width, height = pyautogui.size()
-pyautogui.PAUSE = 3
-pyautogui.FAILSAFE = True
+pyautogui.PAUSE = 3 # Time between clicks
+pyautogui.FAILSAFE = True # Top left corner safety
 
 browser = webdriver.Safari()
 
 url = 'https://my.forksmealplanner.com/#!/archive'
 
+# Load page
 browser.get(url)
 
+# init vars
 start_at = 0
 files = os.listdir()
 
 login()
 time.sleep(5)
 htmlElem = browser.find_element_by_tag_name('html')
+
+# Scroll to the bottom to load all the elements into view
 for i in range(6):
     htmlElem.send_keys(Keys.END)
     time.sleep(3)
     print('scrolling')
+
+# Scroll to the top to get the top elements in view
 for i in range(2):
     htmlElem.send_keys(Keys.HOME)
     time.sleep(3)
     print('scrolling')
+
+# Get all the elements
 menu_elems = getMenuLinks()
 print(len(menu_elems))
 main(menu_elems)
