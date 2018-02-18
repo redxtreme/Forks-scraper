@@ -1,3 +1,6 @@
+// Paste this into the console
+// The json will copy to the clipboard
+
 var mealCards = document.getElementsByClassName("panel meal-panel favorite-panel");
 var urls = {};
 
