@@ -5,20 +5,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-# Navigate to where the files will be stored
-os.chdir(creds.myPath)
-
-# gui elements
-width, height = pyautogui.size()
-pyautogui.PAUSE = 3
-pyautogui.FAILSAFE = True
-
-browser = webdriver.Safari()
-
-url = 'https://my.forksmealplanner.com/#!/archive'
-
-browser.get(url)
-
 # login to the website
 def login():
     time.sleep(5)
@@ -48,14 +34,14 @@ def getMenuLinks():
 
 # Download the menu on the page
 def downloadMenu():
-    time.sleep(5)
+    time.sleep(6)
     download_selector = '.print-recipe-button.ladda-button'
     download_elem = browser.find_element_by_css_selector(download_selector)
     download_elem.click()
     clickPdfButton()
 
 def clickPdfButton():
-    time.sleep(5)
+    time.sleep(7)
     buttonX, buttonY = (118, 700)
     pyautogui.click(buttonX, buttonY)
     buttonX, buttonY = (118, 742)
@@ -63,14 +49,59 @@ def clickPdfButton():
     buttonX, buttonY = (685, 780)
     pyautogui.click(buttonX, buttonY)
 
+def find(name):
+    name += '.pdf'
+    if name in files:
+        return True
+    return False
+
+def main(menu_elems) :
+    for i in range(start_at, len(menu_elems)):
+
+        # scroll to element row above this element, to make sure it's in view
+        if i > 2:
+            browser.execute_script("arguments[0].scrollIntoView();", menu_elems[i-2])
+        
+        # skip if we have this file
+        if find(menu_elems[i].text):
+            print(i)
+            continue
+
+        menu_elems = getMenuLinks()
+        menu_elems[i].click()
+        downloadMenu()
+        os.rename('Untitled.pdf', menu_elems[i].text + '.pdf')
+        browser.back()
+        print(i)
+
+# Navigate to where the files will be stored
+os.chdir(creds.myPath)
+
+# gui elements
+width, height = pyautogui.size()
+pyautogui.PAUSE = 3
+pyautogui.FAILSAFE = True
+
+browser = webdriver.Safari()
+
+url = 'https://my.forksmealplanner.com/#!/archive'
+
+browser.get(url)
+
+start_at = 0
+files = os.listdir()
+
 login()
-menu_elems = getMenuLinks()
+time.sleep(5)
 htmlElem = browser.find_element_by_tag_name('html')
-for i in range(len(menu_elems)):
-    browser.execute_script("arguments[0].scrollIntoView();", menu_elems[i])
-    menu_elems[i].click()
-    downloadMenu()
-    os.rename('Untitled.pdf', menu_elems[i].text + '.pdf')
-    browser.back()
-    time.sleep(5)
-    print(i)
+for i in range(6):
+    htmlElem.send_keys(Keys.END)
+    time.sleep(3)
+    print('scrolling')
+for i in range(2):
+    htmlElem.send_keys(Keys.HOME)
+    time.sleep(3)
+    print('scrolling')
+menu_elems = getMenuLinks()
+print(len(menu_elems))
+main(menu_elems)
