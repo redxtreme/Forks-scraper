@@ -1,6 +1,17 @@
 import creds
+import pyautogui
+import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+
+# Navigate to where the files will be stored
+os.path(creds.myPath)
+
+# gui elements
+width, height = pyautogui.size()
+pyautogui.PAUSE = 1
+pyautogui.FAILSAFE = True
+
 browser = webdriver.Safari()
 
 url = 'https://my.forksmealplanner.com/#!/archive'
@@ -37,6 +48,18 @@ def downloadMenu():
     download_selector = '.print-recipe-button.ladda-button'
     download_elem = browser.find_element_by_css_selector(download_selector)
     download_elem.click()
+    clickPdfButton()
+
+def clickPdfButton():
+    #button_location = pyautogui.center(pyautogui.locateOnScreen('pdf.png'))
+    buttonX, buttonY = (118, 700)
+    pyautogui.click(buttonX, buttonY)
+    buttonX, buttonY = (118, 742)
+    pyautogui.click(buttonX, buttonY)
+    buttonX, buttonY = (685, 780)
+    pyautogui.click(buttonX, buttonY)
+
+#def renameFile():
 
 login()
 menu_elems = getMenuLinks()
