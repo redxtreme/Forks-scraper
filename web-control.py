@@ -66,7 +66,7 @@ def clickPdfButton():
 login()
 menu_elems = getMenuLinks()
 htmlElem = browser.find_element_by_tag_name('html')
-for i in range(5):
+for i in range(len(menu_elems)):
     browser.execute_script("arguments[0].scrollIntoView();", menu_elems[i])
     menu_elems[i].click()
     downloadMenu()
