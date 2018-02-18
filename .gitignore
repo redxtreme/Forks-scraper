@@ -4,3 +4,7 @@ creds.py
 __pycache__/*
 
 *.pyc
+
+urls.json
+
+Console.txt
