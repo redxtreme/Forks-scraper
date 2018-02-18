@@ -1,7 +1,16 @@
 # Downloads all of the images
-import requests
+import urllib, urllib.request
 import urls
+import os
 
-# for url in urls:
-url = "Apple-Oat Pancakes"
-res = request.get(urls[url])
+# change to image directory
+os.chdir(urls.path)
+
+
+# loop through all of the meals and store the files
+count = 0
+for meal in urls.meals:
+    urllib.request.urlretrieve(urls.meals[meal], meal + '.jpg')
+    count += 1
+    if count > 0:
+        break
