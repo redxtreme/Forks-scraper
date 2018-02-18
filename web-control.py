@@ -10,7 +10,7 @@ os.chdir(creds.myPath)
 
 # gui elements
 width, height = pyautogui.size()
-pyautogui.PAUSE = 5
+pyautogui.PAUSE = 3
 pyautogui.FAILSAFE = True
 
 browser = webdriver.Safari()
@@ -65,9 +65,12 @@ def clickPdfButton():
 
 login()
 menu_elems = getMenuLinks()
-for i in range(2):
+htmlElem = browser.find_element_by_tag_name('html')
+for i in range(5):
+    browser.execute_script("arguments[0].scrollIntoView();", menu_elems[i])
     menu_elems[i].click()
     downloadMenu()
     os.rename('Untitled.pdf', menu_elems[i].text + '.pdf')
     browser.back()
     time.sleep(5)
+    print(i)
